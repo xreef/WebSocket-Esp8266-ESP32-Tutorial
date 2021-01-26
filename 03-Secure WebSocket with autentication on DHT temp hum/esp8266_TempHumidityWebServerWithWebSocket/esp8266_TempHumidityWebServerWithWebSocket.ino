@@ -242,10 +242,23 @@ void handleLogout() {
 	return;
 }
 
+void manageSecurity(){
+	if (!is_authenticated()) {
+		httpServer.send(401, F("application/json"), "{\"msg\": \"You must authenticate!\"}");
+		return;
+	}
+}
+
 /**
  * Retrieve temperature humidity realtime data
  */
 void handleTemperatureHumidity(){
+	Serial.println("handleTemperatureHumidity");
+
+	manageSecurity();
+
+	Serial.println("handleTemperatureHumidity security pass!");
+
 	const size_t capacity = 1024;
 	DynamicJsonDocument doc(capacity);
 

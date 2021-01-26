@@ -184,8 +184,11 @@
         if (ENABLE_WS_AUTHORIZATION) {
             // Example
             var cookieVal = getCookie('ESPWSSESSIONID'); // returns "turkey"
-
-            initWebSocket(cookieVal);
+            if (cookieVal && cookieVal!=="0") {
+                initWebSocket(cookieVal);
+            }else{
+                window.location.href = '/login.html?msg=User not logged in!';
+            }
         }else{
             initWebSocket();
         }
